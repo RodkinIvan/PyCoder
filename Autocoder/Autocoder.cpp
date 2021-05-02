@@ -97,10 +97,10 @@ std::string Autocoder::decode(const std::vector<bool>& code) {
             decoded[i * chunkSize + j] = bool(std::round(out[j]));
         }
     }
-    std::cout << "Decoded:          ";
-    for(auto i : decoded){
-        std::cout << i << ' ';
-    }
-    std::cout << '\n';
+//    std::cout << "Decoded:          ";
+//    for(auto i : decoded){
+//        std::cout << i << ' ';
+//    }
+//    std::cout << '\n';
     return makeString(decoded);
 }
