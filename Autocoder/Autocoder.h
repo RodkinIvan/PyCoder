@@ -41,27 +41,26 @@ extern "C"{
     char* encode(Autocoder* a, const char* dat){
         std::string data(dat);
         std::vector<bool> code = a->encode(data);
-        char* res = new char[code.size()];
+        std::string str(code.size(),'a');
         for(size_t i = 0; i < code.size(); ++i){
-            res[i] = '0' + code[i];
+            str[i] = '0' + code[i];
         }
+        char* res = new char(str.length());
+        strcpy(res, str.c_str());
         return res;
     }
 
     char* decode(Autocoder* a, const char* cod){
-        std::vector<bool> code(strlen(cod));
-        for(size_t i = 0; i < strlen(cod); ++i){
-            code[i] = cod[i];
+        std::string code(cod);
+        std::vector<bool> v(code.size());
+        for(size_t i = 0; i < code.size(); ++i){
+            v[i] = code[i] - '0';
         }
-        std::string decoded = a->decode(code);
+        std::string decoded = a->decode(v);
         char* decode = new char[decoded.size()];
-        for(size_t i = 0; i < decoded.size(); ++i){
-            decode[i] = decoded[i];
-        }
+        strcpy(decode, decoded.c_str());
         return decode;
     }
-
-
 
     std::vector<bool> getRaw(const std::string& s);
 
@@ -76,5 +75,9 @@ extern "C"{
             c[i] = str[i];
         }
         return c;
+    }
+
+    void print(char* c){
+        std::cout << c << '\n';
     }
 }
