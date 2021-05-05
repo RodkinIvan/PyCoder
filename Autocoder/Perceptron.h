@@ -85,7 +85,7 @@ void Perceptron<activation_function>::learn(const std::vector<std::vector<bool>>
     /////////////////////////////////////////////////////////////////////////////
     long double sum = 0;                                                      ///
     for (size_t i = 0; i < sz; ++i) {                                         ///
-        std::vector<double> outp = run(inputs[i], 0, outCol);            ///
+        std::vector<double> outp = run(inputs[i], 0, outCol);                 ///
         for (size_t j = 0; j < neurons[(outCol + c) % c].size(); ++j) {       ///
             sum += (outp[j] - outputs[i][j]) * (outp[j] - outputs[i][j]);     ///
         }                                                                     ///

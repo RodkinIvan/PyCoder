@@ -64,6 +64,7 @@ void Autocoder::learn(const std::string& data) {
 }
 
 std::vector<bool> Autocoder::encode(const std::string& data) {
+    assert(data.length() * 8 % chunkSize == 0);
     std::vector<std::vector<bool>> input = getInput(data, chunkSize);
 
     std::vector<double> coded(input.size() * outSize);
@@ -83,7 +84,7 @@ std::vector<bool> Autocoder::encode(const std::string& data) {
 }
 
 std::string Autocoder::decode(const std::vector<bool>& code) {
-
+    assert(code.size() % outSize == 0);
     size_t chunksNum = code.size() / outSize;
     std::vector<bool> decoded(chunksNum * chunkSize);
     std::vector<bool> toDecode(outSize);

@@ -35,7 +35,8 @@ class c_str:
         return cast(self.obj, c_char_p)
 
     def str(self):
-        return self.__char_p__().value.decode('utf-8')
+        c_string = self.__char_p__().value
+        return c_string.decode('utf-8')
 
     def __del__(self):
         lib.deleteVector(self.obj)
@@ -44,15 +45,23 @@ class c_str:
 class Autocoder:
     def __init__(self, inp, out):
         self.obj = lib.createAutocoder(c_int(inp), c_int(out))
+        self.inp = inp
+        self.out = out
 
     def learn(self, string):
+        if len(string)*8 % self.inp != 0:
+            raise Exception('incorrect size!')
         lib.learn(self.obj, string.encode('utf-8'))
 
     def encode(self, string):
+        if len(string)*8 % self.inp != 0:
+            raise Exception('incorrect size!')
         c_s = c_str(lib.encode(self.obj, string.encode('utf-8')))
         return c_s.str()
 
     def decode(self, string):
+        if len(string) % self.out != 0:
+            raise Exception('incorrect size!')
         c_s = c_str(lib.decode(self.obj, string.encode('utf-8')))
         return c_s.str()
 

@@ -45,7 +45,7 @@ extern "C"{
         for(size_t i = 0; i < code.size(); ++i){
             str[i] = '0' + code[i];
         }
-        char* res = new char(str.length());
+        char* res = new char[str.length() + 1];
         strcpy(res, str.c_str());
         return res;
     }
@@ -54,10 +54,10 @@ extern "C"{
         std::string code(cod);
         std::vector<bool> v(code.size());
         for(size_t i = 0; i < code.size(); ++i){
-            v[i] = code[i] - '0';
+            v[i] = (code[i] != '0');
         }
         std::string decoded = a->decode(v);
-        char* decode = new char[decoded.size()];
+        char* decode = new char[decoded.length() + 1];
         strcpy(decode, decoded.c_str());
         return decode;
     }
@@ -80,4 +80,5 @@ extern "C"{
     void print(char* c){
         std::cout << c << '\n';
     }
+
 }

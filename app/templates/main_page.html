@@ -2,9 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ONI-CHAN version 3</title>
+    <title>oni-chan version 3</title>
 </head>
 <body>
-<h1>Oha you go za i masu, onii-chan ^_^</h1>
+    <something>
+        <h1>Memory</h1>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.text.label }}<br>
+                {{ form.text(size=40) }}<br>
+                {{ form.remember() }}
+                {{ form.ask() }}
+                {{ form.code() }}
+                {{ form.forget() }}
+            </p>
+        </form>
+        <Tyan>
+            <label>
+                <textarea cols=40, rows=4, readonly>{{ ans }}</textarea>
+            </label>
+        </Tyan>
+        <h1>Parameters</h1>
+        <form action="" method="post" novalidate>
+            {{ params.hidden_tag() }}
+            <p>
+                {{ params.inp.label }}
+                {{ params.inp(size=2) }} <br>
+
+                {{ params.out.label }}
+                {{ params.out(size=2) }} <br>
+
+                {{ params.submit() }}
+            </p>
+        </form>
+    </something>
+
 </body>
 </html>

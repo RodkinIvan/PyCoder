@@ -1,20 +1,42 @@
 from app import app
-from flask import render_template
-from ctypes import *
+from flask import render_template, redirect, url_for
 from Autocoder.Autocoder import Autocoder
-
+from app.forms import MainForm
+from app.forms import ParametersForm
 
 a = Autocoder(8, 5)
-a.learn('Ohayo')
-code = a.encode('Ohayo')
-print(a.decode(code))
-# lib.print(code)
-# print(code.decode('utf-8'))
-# decode = lib.decode(a, code)
-# print(decode.decode('utf-8'))
-# print((lib.stupid_function('I\'m so stupid!'.encode('utf-8')).decode('utf-8')))
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def start():
-    return render_template('main_page.html')
+    global a
+    form = MainForm()
+    params = ParametersForm()
+    answer = ''
+    if params.validate_on_submit():
+        a = Autocoder(int(params.inp.data), int(params.out.data))
+    try:
+        if form.validate_on_submit():
+            if form.remember.data:
+                a.learn(form.text.data)
+                answer = 'Yup'
+            if form.ask.data:
+                answer = a.decode(a.encode(form.text.data))
+            if form.code.data:
+                answer = a.encode(form.text.data)
+            if form.forget.data:
+                a = Autocoder(8, 5)
+                answer = 'I know nothing :)'
+    except Exception as e:
+        if str(e) == 'incorrect size!':
+            answer = 'Incorrect size! >_<'
+        else:
+            answer = 'I can\'t :('
+
+    return render_template('main_page.html', form=form, params=params, ans=answer)
+
+
+@app.route('/learn/<string:string>')
+def learn(string):
+    a.learn(string)
+    return redirect('/')
