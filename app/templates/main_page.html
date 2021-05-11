@@ -27,11 +27,10 @@
         <form action="" method="post" novalidate>
             {{ params.hidden_tag() }}
             <p>
-                {{ params.inp.label }}
-                {{ params.inp(size=2) }} <br>
-
-                {{ params.out.label }}
-                {{ params.out(size=2) }} <br>
+                ___{{ i }}___ -> ___{{ o }}___ <br>
+                {{ params.inp(size=1) }}
+                ->
+                {{ params.out(size=1) }} <br>
 
                 {{ params.submit() }}
             </p>
