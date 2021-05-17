@@ -15,3 +15,4 @@ class ParametersForm(FlaskForm):
     inp = StringField('from', validators=[DataRequired()])
     out = StringField('to', validators=[DataRequired()])
     submit = SubmitField('Submit')
+    # spd = StringField('Learning speed')
