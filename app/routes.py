@@ -5,6 +5,7 @@ from app.forms import MainForm
 from app.forms import ParametersForm
 from app.parsing import get_img
 
+
 a = Autocoder(8, 5)
 i = 8
 o = 5
